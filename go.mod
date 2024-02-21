@@ -1,4 +1,4 @@
-module github.com/artefactual-sdps/Remove-SIP-Activity
+module github.com/artefactual-sdps/remove-files-activity
 
 go 1.22.0
 
