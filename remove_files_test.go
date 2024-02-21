@@ -1,8 +1,9 @@
-package main
+package remove_test
 
 import (
 	"testing"
 
+	remove "github.com/artefactual-sdps/Remove-SIP-Activity"
 	temporalsdk_activity "go.temporal.io/sdk/activity"
 	temporalsdk_testsuite "go.temporal.io/sdk/testsuite"
 	"gotest.tools/v3/assert"
@@ -20,13 +21,13 @@ func TestRemoveSipFiles(t *testing.T) {
 
 	type Test struct {
 		name    string
-		params  RemoveSIPFilesParams
+		params  remove.RemoveSIPFilesParams
 		wantErr string
 	}
 	for _, tt := range []Test{
 		{
 			name: "Should remove ds store from directory",
-			params: RemoveSIPFilesParams{
+			params: remove.RemoveSIPFilesParams{
 				SipPath:     td.Path(),
 				SuccumbPath: config.Path(),
 			},
@@ -38,12 +39,12 @@ func TestRemoveSipFiles(t *testing.T) {
 			ts := &temporalsdk_testsuite.WorkflowTestSuite{}
 			env := ts.NewTestActivityEnvironment()
 			env.RegisterActivityWithOptions(
-				NewRemoveSIPFilesActivity().Execute,
+				remove.NewRemoveSIPFilesActivity().Execute,
 				temporalsdk_activity.RegisterOptions{
-					Name: RemoveSIPFilesName,
+					Name: remove.RemoveSIPFilesName,
 				},
 			)
-			_, err := env.ExecuteActivity(RemoveSIPFilesName, tt.params)
+			_, err := env.ExecuteActivity(remove.RemoveSIPFilesName, tt.params)
 			if tt.wantErr != "" {
 				assert.Error(t, err, tt.wantErr)
 			}
