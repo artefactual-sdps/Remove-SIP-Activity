@@ -1,6 +1,6 @@
 module github.com/artefactual-sdps/remove-files-activity
 
-go 1.22.0
+go 1.22
 
 require (
 	github.com/Diogenesoftoronto/go-gitignore v1.1.0
