@@ -18,25 +18,22 @@ func NewRemoveSIPFilesActivity() *RemoveSIPFilesActivity {
 }
 
 type RemoveSIPFilesParams struct {
-	SipPath     string
-	SuccumbPath string
+	DestPath   string // path to the directory where the files will be removed from.
+	ConfigPath string // path to the configuration file
 }
 
 type RemoveSIPFilesResult struct{}
 
 func (md *RemoveSIPFilesActivity) Execute(ctx context.Context, params *RemoveSIPFilesParams) (*RemoveSIPFilesResult, error) {
-	obj := ignore.CompileIgnoreLines(params.SuccumbPath)
+	obj := ignore.CompileIgnoreLines(params.ConfigPath)
 	// Walk the sip path directory and remove the file if it does return a match on obj
-	alreadyDeletedPaths := make(map[string]any)
-
-	err := filepath.WalkDir(params.SipPath, func(path string, d fs.DirEntry, err error) error {
+	err := filepath.WalkDir(params.DestPath, func(path string, d fs.DirEntry, err error) error {
 		if obj.MatchesPath(path) {
 			err := os.RemoveAll(path)
 			if err != nil {
 				return err
 
 			}
-			alreadyDeletedPaths[path] = nil
 		}
 		return nil
 

@@ -28,8 +28,8 @@ func TestRemoveSipFiles(t *testing.T) {
 		{
 			name: "Should remove ds store from directory",
 			params: remove.RemoveSIPFilesParams{
-				SipPath:     td.Path(),
-				SuccumbPath: config.Path(),
+				DestPath:   td.Path(),
+				ConfigPath: config.Path(),
 			},
 		},
 	} {
